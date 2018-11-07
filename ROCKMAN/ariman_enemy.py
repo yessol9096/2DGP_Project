@@ -26,6 +26,11 @@ class Tikky:
 
     def set_xy(self,x,y):
         self.x, self.y = x, y
+
+    def get_bb(self):
+        # fill here
+        return self.sx - 100, self.y - 100, self.sx + 100, self.y + 85
+
     def update(self):
         self.frame = (self.frame + 15 * ACTION_PER_TIME * game_framework.frame_time) % 15
         #self.off_set()
@@ -39,9 +44,9 @@ class Tikky:
         self.set_center_object = player
 
     def draw(self):
-        sx = self.x - (self.bg.left*3)
-        self.image.clip_draw(0, int(self.frame) * 104, 80, 104, sx, self.y, 200, 250)
-
+        self.sx = self.x - (self.bg.left*3)
+        self.image.clip_draw(0, int(self.frame) * 104, 80, 104, self.sx, self.y, 200, 250)
+        draw_rectangle(*self.get_bb())
 
 class Lightning_lord:
 

@@ -309,15 +309,15 @@ class Rockman:
         self.bullet_x = 0
         self.off_set_x = 0
 
-    def get_bb(self):
-        return self.x - 30, self.y - 30, self.x + 30, self.y + 40
-
     def off_set(self):
         x_left_offset = min(0, self.x - self.canvas_width // 2)
         x_right_offset = max(0, self.x - self.bg.w + self.canvas_width // 2)
 
         self.off_set_x = x_left_offset + x_right_offset
         self.bullet_x = self.canvas_width // 2 + self.off_set_x
+
+    def get_bb(self):
+        return self.canvas_width // 2 + self.off_set_x - 30, self.y - 30, self.canvas_width // 2 +self.off_set_x + 30, self.y + 40
 
     def set_background(self, bg):
         self.bg = bg
