@@ -309,6 +309,8 @@ class Rockman:
         self.bullet_x = 0
         self.off_set_x = 0
 
+    def get_bb(self):
+        return self.x - 30, self.y - 30, self.x + 30, self.y + 40
 
     def off_set(self):
         x_left_offset = min(0, self.x - self.canvas_width // 2)
@@ -341,7 +343,7 @@ class Rockman:
 
     def draw(self):
         self.cur_state.draw(self)
-
+        draw_rectangle(*self.get_bb())
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
