@@ -48,6 +48,7 @@ class Tikky:
         self.image.clip_draw(0, int(self.frame) * 104, 80, 104, self.sx, self.y, 200, 250)
         draw_rectangle(*self.get_bb())
 
+
 class Lightning_lord:
 
     def __init__(self):
