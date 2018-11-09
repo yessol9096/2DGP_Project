@@ -1,13 +1,6 @@
 import time
 frame_time = 0.0
 
-
-
-
-
-
-
-
 class GameState:
     def __init__(self, state):
         self.enter = state.enter

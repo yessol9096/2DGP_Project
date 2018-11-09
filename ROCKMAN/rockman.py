@@ -340,7 +340,6 @@ class Rockman:
             self.cur_state.enter(self, event)
 
 
-
     def draw(self):
         self.cur_state.draw(self)
         draw_rectangle(*self.get_bb())

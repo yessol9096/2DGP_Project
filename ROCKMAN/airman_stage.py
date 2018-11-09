@@ -12,6 +12,7 @@ from ariman_enemy import Tikky, Lightning_lord, Fan_fined
 
 
 name = "MainState"
+tikkys_position = {(1000,300)}
 
 player = None
 
