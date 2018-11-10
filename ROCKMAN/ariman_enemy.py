@@ -11,7 +11,7 @@ FRAMES_PER_ACTION = 15
 
 class Tikky:
 
-    def __init__(self):
+    def __init__(self, pos):
         self.image = load_image('resource/enemy/Tikky.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
@@ -20,12 +20,9 @@ class Tikky:
         self.speed = 0
         self.frame = random.randint(0,15)
         self.left = 0
-        self.x = 0
-        self.y = 0
+        self.x = pos[0]
+        self.y = pos[1]
         self.off_set_x = 0
-
-    def set_xy(self,x,y):
-        self.x, self.y = x, y
 
     def get_bb(self):
         # fill here
@@ -51,7 +48,7 @@ class Tikky:
 
 class Lightning_lord:
 
-    def __init__(self):
+    def __init__(self, Info):
         self.image = load_image('resource/enemy/cloud.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
@@ -60,24 +57,18 @@ class Lightning_lord:
         self.speed = 0
         self.frame = random.randint(0,1)
         self.left = 0
-        self.x = 0
-        self.y = 0
+        self.x = Info[0]
+        self.y = Info[1]
         self.off_set_x = 0
-        self.r = 0
+        self.r = Info[2]
         self.velocity = 1
-        self.temp_y = 0
-        self.temp_x = 0
+        self.temp_y = self.y
+        self.temp_x = self.x
 
-        self.TIME_PER_CIRCLE = 5.0
+        self.TIME_PER_CIRCLE = Info[3]
         self.CIRCLE_PER_TIME = 1.0 / self.TIME_PER_CIRCLE
         self.FRAMES_PER_DEGREE = 360
         self.PIXEL_PER_METER = (10.0 / 0.3)
-
-    def set_xy(self, x, y, r, speed):
-        self.x, self.y = x, y
-        self.r,  self.CIRCLE_PER_TIME = r, speed
-        self.temp_x, self.temp_y = self.x, self.y
-
 
     def update(self):
         self.frame = (self.frame + 2 * 0.5 * game_framework.frame_time) % 2
@@ -103,7 +94,7 @@ class Lightning_lord:
 
 class Fan_fined:
 
-    def __init__(self):
+    def __init__(self, pos):
         self.image = load_image('resource/enemy/Fan_Fined.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
@@ -112,12 +103,9 @@ class Fan_fined:
         self.speed = 0
         self.frame = random.randint(0,8)
         self.left = 0
-        self.x = 0
-        self.y = 0
+        self.x = pos[0]
+        self.y = pos[1]
         self.off_set_x = 0
-
-    def set_xy(self,x,y):
-        self.x, self.y = x, y
 
     def update(self):
         self.frame = (self.frame + 8* ACTION_PER_TIME * game_framework.frame_time) % 8

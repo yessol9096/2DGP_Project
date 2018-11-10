@@ -12,32 +12,20 @@ from ariman_enemy import Tikky, Lightning_lord, Fan_fined
 
 
 name = "MainState"
-tikkys_position = {(1000,300)}
-
+tikkys_position = [(1000,300), (1550, 250), (2050, 350), (2550, 330), (3050, 330), (7950, 330), (8350, 360)]
+lightning_lord_position = [(3800,350,8,8), (4100, 350, 6, 6), (4600, 350, 5, 4), (5000, 350, 5, 5)]
+fan_fineds_position = [(9600,465), (11500,465), (11750, 557)]
 player = None
 
 def enter():
     global player
     player = Rockman()
-    tikkys = [Tikky() for i in range(7)]
-    tikkys[0].set_xy(1000, 300)
-    tikkys[1].set_xy(1550, 250)
-    tikkys[2].set_xy(2050, 350)
-    tikkys[3].set_xy(2550, 330)
-    tikkys[4].set_xy(3050, 330)
-    tikkys[5].set_xy(7950, 330)
-    tikkys[6].set_xy(8350, 360)
 
-    lightning_lords = [Lightning_lord() for i in range(4)]
-    lightning_lords[0].set_xy(3800,350,8,0.08)
-    lightning_lords[1].set_xy(4100, 350, 6, 0.06)
-    lightning_lords[2].set_xy(4600, 350, 5, 0.04)
-    lightning_lords[3].set_xy(5000, 350, 5, 0.05)
+    # 적 생성, 위치조정
+    tikkys = [Tikky(tikkys_position[i]) for i in range(7)]
+    lightning_lords = [Lightning_lord(lightning_lord_position[i]) for i in range(4)]
+    fan_fineds = [Fan_fined(fan_fineds_position[i]) for i in range(3)]
 
-    fan_fineds = [Fan_fined() for i in range(3)]
-    fan_fineds[0].set_xy(9600,465)
-    fan_fineds[1].set_xy(11500,465)
-    fan_fineds[2].set_xy(11750, 557)
     background = Airman_background()
     background.set_center_object(player)
 
