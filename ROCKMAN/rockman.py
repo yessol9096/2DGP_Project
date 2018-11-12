@@ -81,7 +81,7 @@ class IdleState:
         rockman.frame = (rockman.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
         rockman.x = clamp(0, rockman.x, rockman.bg.w)
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
-        rockman.off_set()
+        rockman.rollsecreen_set_player_pos_x()
 
     @staticmethod
     def draw(rockman):
@@ -115,7 +115,7 @@ class RunState:
         rockman.x += rockman.velocity * game_framework.frame_time
         rockman.x = clamp(0, rockman.x, rockman.bg.w)
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
-        rockman.off_set()
+        rockman.rollsecreen_set_player_pos_x()
 
 
 
@@ -224,7 +224,7 @@ class JumpState:
         rockman.x += rockman.velocity * game_framework.frame_time
         rockman.x = clamp(0, rockman.x, rockman.bg.w)
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
-        rockman.off_set()
+        rockman.rollsecreen_set_player_pos_x()
         if(rockman.y < 350) :
             rockman.y = 350
             rockman.add_event(LANDING)
@@ -268,7 +268,7 @@ class StartState:
         if(rockman.y <= 350):
             rockman.add_event(LANDING)
             rockman.y = 350
-        rockman.off_set()
+        rockman.rollsecreen_set_player_pos_x()
     @staticmethod
     def draw(rockman):
         global frame_y
@@ -309,7 +309,7 @@ class Rockman:
         self.bullet_x = 0
         self.off_set_x = 0
 
-    def off_set(self):
+    def rollsecreen_set_player_pos_x(self):
         x_left_offset = min(0, self.x - self.canvas_width // 2)
         x_right_offset = max(0, self.x - self.bg.w + self.canvas_width // 2)
 
