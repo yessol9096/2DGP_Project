@@ -2,6 +2,10 @@ from pico2d import *
 import random
 import game_framework
 
+TIME_PER_ACTION = 3   # 한번 액션하는데 0.5 걸린다
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION    # 시간당 몇번 액션 할 것인가
+FRAMES_PER_ACTION = 15
+
 class Airman:
 
     def __init__(self, pos):
@@ -18,8 +22,7 @@ class Airman:
         self.off_set_x = 0
 
     def update(self):
-        pass
-        #self.frame = (self.frame + 8* ACTION_PER_TIME * game_framework.frame_time) % 8
+        self.frame = (self.frame + 8* ACTION_PER_TIME * game_framework.frame_time) % 8
 
     def set_background(self, bg):
         self.bg = bg
