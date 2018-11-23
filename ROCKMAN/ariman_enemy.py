@@ -33,7 +33,7 @@ class Tikky:
         #self.off_set()
 
     def set_background(self, bg):
-        self.temp = bg.left
+        self.temp = bg.window_left
         self.bg = bg
 
 
@@ -41,7 +41,7 @@ class Tikky:
         self.set_center_object = player
 
     def draw(self):
-        self.sx = self.x - (self.bg.left*3)
+        self.sx = self.x - (self.bg.window_left)
         self.image.clip_draw(0, int(self.frame) * 104, 80, 104, self.sx, self.y, 200, 250)
         draw_rectangle(*self.get_bb())
 
@@ -89,8 +89,8 @@ class Lightning_lord:
 
     def draw(self):
         self.circle()
-        sx = self.x - (self.bg.left*3)
-        self.image.clip_draw( int(self.frame) *40, 0, 40, 32, self.x - (self.bg.left*3), self.y, 100, 100)
+        sx = self.x - (self.bg.window_left*3)
+        self.image.clip_draw( int(self.frame) *40, 0, 40, 32, self.x - (self.bg.window_left*3), self.y, 100, 100)
 
 class Fan_fined:
 
@@ -118,7 +118,7 @@ class Fan_fined:
         self.set_center_object = player
 
     def draw(self):
-        sx = self.x - (self.bg.left*3)
+        sx = self.x - (self.bg.window_left*3)
         self.image.clip_draw(int(self.frame) * 40, 0, 40, 31, sx, self.y, 100, 90)
 
 

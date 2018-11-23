@@ -86,9 +86,9 @@ class IdleState:
     @staticmethod
     def draw(rockman):
         if rockman.dir == 1:
-            rockman.image.clip_draw(0, 240, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
+            rockman.image.clip_draw(0, 240, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
         else:
-            rockman.image.clip_draw(0, 200, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
+            rockman.image.clip_draw(0, 200, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
 
 
 class RunState:
@@ -122,9 +122,9 @@ class RunState:
     @staticmethod
     def draw(rockman):
         if rockman.dir == 1:
-            rockman.image.clip_draw(40 + int(rockman.frame) * 40, 240, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
+            rockman.image.clip_draw(40 + int(rockman.frame) * 40, 240, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
         else:
-            rockman.image.clip_draw(40 + int(rockman.frame) * 40, 200, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
+            rockman.image.clip_draw(40 + int(rockman.frame) * 40, 200, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
 
 class Idle_attackState:
 
@@ -152,9 +152,9 @@ class Idle_attackState:
     @staticmethod
     def draw(rockman):
         if rockman.dir == 1:
-            rockman.image.clip_draw(0, 160, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
+            rockman.image.clip_draw(0, 160, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
         else:
-            rockman.image.clip_draw(0, 120, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
+            rockman.image.clip_draw(0, 120, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
 
 class Run_attackState:
 
@@ -186,10 +186,10 @@ class Run_attackState:
     @staticmethod
     def draw(rockman):
         if rockman.dir == 1:
-            rockman.image.clip_draw(40 + int(rockman.frame) * 40, 160, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE,
+            rockman.image.clip_draw(40 + int(rockman.frame) * 40, 160, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE,
                                     CHAR_SIZE)
         else:
-            rockman.image.clip_draw(40 + int(rockman.frame) * 40, 120, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE,
+            rockman.image.clip_draw(40 + int(rockman.frame) * 40, 120, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE,
                                     CHAR_SIZE)
 
 class JumpState:
@@ -234,9 +234,9 @@ class JumpState:
     def draw(rockman):
         global frame_y
         if rockman.dir == 1:
-            rockman.image.clip_draw(160, 240 + frame_y, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
+            rockman.image.clip_draw(160, 240 + frame_y, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
         else:
-            rockman.image.clip_draw(160, 200 + frame_y, 40, 40, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
+            rockman.image.clip_draw(160, 200 + frame_y, 40, 40, rockman.off_set_x, rockman.y, CHAR_SIZE, CHAR_SIZE)
 
 class StartState:
     global frame_x
@@ -272,7 +272,7 @@ class StartState:
     @staticmethod
     def draw(rockman):
         global frame_y
-        rockman.start_image.clip_draw(0, 0, 30, 35, rockman.canvas_width // 2 + rockman.off_set_x, rockman.y, ENTER_EFFECT_XSIZE, ENTER_EFFECT_YSIZE)
+        rockman.start_image.clip_draw(0, 0, 30, 35, rockman.off_set_x, rockman.y, ENTER_EFFECT_XSIZE, ENTER_EFFECT_YSIZE)
 
 
 next_state_table = {
@@ -310,14 +310,10 @@ class Rockman:
         self.off_set_x = 0
 
     def rollsecreen_set_player_pos_x(self):
-        x_left_offset = min(0, self.x - self.canvas_width // 2)
-        x_right_offset = max(0, self.x - self.bg.w + self.canvas_width // 2)
-
-        self.off_set_x = x_left_offset + x_right_offset
-        self.bullet_x = self.canvas_width // 2 + self.off_set_x
+        self.off_set_x = self.x - self.bg.window_left
 
     def get_bb(self):
-        return self.canvas_width // 2 + self.off_set_x - 30, self.y - 30, self.canvas_width // 2 +self.off_set_x + 30, self.y + 40
+        return self.off_set_x - 50, self.y - 50, self.off_set_x + 50, self.y + 50
 
     def set_background(self, bg):
         self.bg = bg

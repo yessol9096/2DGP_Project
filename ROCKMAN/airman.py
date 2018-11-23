@@ -1,5 +1,6 @@
 from pico2d import *
 import random
+
 class Airman:
 
     def __init__(self, pos):
