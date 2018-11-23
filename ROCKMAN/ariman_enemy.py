@@ -25,7 +25,7 @@ class Tikky:
         self.off_set_x = 0
 
     def get_bb(self):
-        # fill here
+        self.sx = self.x - (self.bg.window_left)
         return self.sx - 100, self.y - 100, self.sx + 100, self.y + 85
 
     def update(self):
@@ -89,8 +89,8 @@ class Lightning_lord:
 
     def draw(self):
         self.circle()
-        sx = self.x - (self.bg.window_left*3)
-        self.image.clip_draw( int(self.frame) *40, 0, 40, 32, self.x - (self.bg.window_left*3), self.y, 100, 100)
+        self.sx = self.x - (self.bg.window_left)
+        self.image.clip_draw( int(self.frame) *40, 0, 40, 32, self.sx, self.y, 100, 100)
 
 class Fan_fined:
 
@@ -118,7 +118,7 @@ class Fan_fined:
         self.set_center_object = player
 
     def draw(self):
-        sx = self.x - (self.bg.window_left*3)
-        self.image.clip_draw(int(self.frame) * 40, 0, 40, 31, sx, self.y, 100, 90)
+        self.sx = self.x - (self.bg.window_left)
+        self.image.clip_draw(int(self.frame) * 40, 0, 40, 31, self.sx, self.y, 100, 90)
 
 

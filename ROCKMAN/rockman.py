@@ -8,17 +8,17 @@ from sound_manager import *
 # Rockman Run Speed
 # fill expressions correctly
 PIXEL_PER_METER = (10.0 / 0.3)
-RUN_SPEED_KMPH = 15.0
+RUN_SPEED_KMPH = 30.0
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-JUMP_SPEED_KMPH = 5  # Km / Hour
+JUMP_SPEED_KMPH = 3  # Km / Hour
 JUMP_SPEED_MPM = (JUMP_SPEED_KMPH * 1000.0 / 60.0)
 JUMP_SPEED_MPS = (JUMP_SPEED_MPM / 60.0)
 JUMP_SPEED_PPS = (JUMP_SPEED_MPS * PIXEL_PER_METER)
 
-FALL_SPEED_KMPH = 10  # Km / Hour
+FALL_SPEED_KMPH = 8  # Km / Hour
 FALL_SPEED_MPM = (FALL_SPEED_KMPH * 1000.0 / 60.0)
 FALL_SPEED_MPS = (FALL_SPEED_MPM / 60.0)
 FALL_SPEED_PPS = (FALL_SPEED_MPS * PIXEL_PER_METER)
@@ -317,10 +317,11 @@ class Rockman:
 
     def set_background(self, bg):
         self.bg = bg
-        self.x = self.bg.w / 15
+        self.x = self.canvas_width / 2
         self.y = 900
 
     def attack(self):
+        self.bullet_x =  self.off_set_x
         bullet = Bullet(self.bullet_x, self.y, self.dir)
         game_world.add_object(bullet, 1)
 
