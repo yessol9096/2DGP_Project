@@ -267,7 +267,7 @@ class StartState:
             rockman.y -= ENTER_SPEED_PPS * game_framework.frame_time
         if(rockman.y <= 350):
             rockman.add_event(LANDING)
-            rockman.y = 350
+            #rockman.y = 350
         rockman.rollsecreen_set_player_pos_x()
     @staticmethod
     def draw(rockman):
