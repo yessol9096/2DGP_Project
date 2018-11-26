@@ -9,12 +9,16 @@ import game_world
 from rockman import Rockman
 from airman_background import Airman_background
 from ariman_enemy import Tikky, Lightning_lord, Fan_fined
+from airman_stage_brick import Brick
 
 
 name = "MainState"
 tikkys_position = [(950,300), (1500, 250), (2000, 350), (2450, 330), (2900, 330), (7900, 330), (8270, 360)]
 lightning_lord_position = [(3800,350,8,8), (4100, 350, 6, 6), (4600, 350, 5, 4), (5000, 350, 5, 5)]
 fan_fineds_position = [(9600,465), (11500,465), (11750, 557)]
+bricks_num = 4
+bricks_position = [(345,300), (1212, 400), (1705,400), (2220,450)]
+bricks_size = [(400,20), (46,20), (23,20), (23,20)]
 player = None
 
 tikkys = []
@@ -34,14 +38,14 @@ def collide(a, b):
     return True
 
 def enter():
-    global player
+    global player, bricks_num
     player = Rockman()
-    global tikkys, lightning_lords, fan_fineds
+    global tikkys, lightning_lords, fan_fineds, bricks
     # 적 생성, 위치조정
     tikkys = [Tikky(tikkys_position[i]) for i in range(5)]
     lightning_lords = [Lightning_lord(lightning_lord_position[i]) for i in range(4)]
     fan_fineds = [Fan_fined(fan_fineds_position[i]) for i in range(3)]
-
+    bricks = [Brick(bricks_position[i],bricks_size[i]) for i in range(bricks_num)]
     background = Airman_background()
     background.set_center_object(player)
 
@@ -54,6 +58,10 @@ def enter():
 
     for fan_fined in fan_fineds:
         fan_fined.set_background(background)
+
+    for brick in bricks:
+        brick.set_background(background)
+
     player.set_background(background)
 
 
@@ -61,6 +69,7 @@ def enter():
     game_world.add_objects(tikkys, 0)
     game_world.add_objects(lightning_lords, 1)
     game_world.add_objects(fan_fineds, 1)
+    game_world.add_objects(bricks, 1)
     game_world.add_object(player, 1)
 
 
