@@ -225,8 +225,8 @@ class JumpState:
         rockman.x = clamp(0, rockman.x, rockman.bg.w)
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
         rockman.rollsecreen_set_player_pos_x()
-        if(rockman.y < 350) :
-            rockman.y = 350
+        if(rockman.y < rockman.min_y) :
+            rockman.y = rockman.min_y
             rockman.add_event(LANDING)
             rockman.jump_time = 0
 
@@ -281,7 +281,7 @@ next_state_table = {
     RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, SPACE: RunState, ATTACK: Run_attackState, ATTACK_OFF: RunState, JUMP: JumpState},
     Idle_attackState: {RIGHT_UP: Idle_attackState, LEFT_UP: Idle_attackState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, ATTACK_OFF: IdleState,ATTACK: Idle_attackState, JUMP: JumpState},
     Run_attackState: {RIGHT_UP: Idle_attackState, LEFT_UP: Idle_attackState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, ATTACK_OFF: RunState, ATTACK: Run_attackState, JUMP: JumpState},
-    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState, RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, ATTACK: JumpState, ATTACK_OFF: JumpState, JUMP: JumpState, LANDING: IdleState}
+    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState, RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, ATTACK: JumpState, ATTACK_OFF: JumpState ,JUMP:JumpState,LANDING: IdleState}
 }
 
 class Rockman:
@@ -308,17 +308,23 @@ class Rockman:
         self.canvas_height = get_canvas_height()
         self.bullet_x = 0
         self.off_set_x = 0
+        self.collide_check = False
+        self.min_y = 0
 
     def rollsecreen_set_player_pos_x(self):
         self.off_set_x = self.x - self.bg.window_left
 
     def get_bb(self):
-        return self.off_set_x - 50, self.y - 50, self.off_set_x + 50, self.y + 50
+        return self.off_set_x - 40, self.y -30, self.off_set_x + 40, self.y + 40
 
     def set_background(self, bg):
         self.bg = bg
         self.x = self.canvas_width / 2
         self.y = 900
+
+    def collide(self,collide_y):
+        self.min_y = collide_y
+        self.collide_check = True
 
     def attack(self):
         self.bullet_x =  self.off_set_x
@@ -335,7 +341,8 @@ class Rockman:
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
-
+        if (self.cur_state!=JumpState and self.y > self.min_y):
+            self.y -= 0.98
 
     def draw(self):
         self.cur_state.draw(self)

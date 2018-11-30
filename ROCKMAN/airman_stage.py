@@ -24,7 +24,7 @@ player = None
 tikkys = []
 lightning_lord_positions = []
 fan_fineds = []
-
+bricks= []
 def collide(a, b):
     # fill here
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -98,9 +98,32 @@ def handle_events():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
+    brick_collision = False
+    tikky_collision = False
     for tikky in tikkys:
         if collide(player, tikky):
-            player.y = tikky.y + 100
+            player.collide(tikky.collide_y)
+            tikky.collide_check = True
+        else:
+            tikky.collide_check = False
+        if tikky.collide_check == False: continue
+        tikky_collision = True
+
+    for brick in bricks:
+        if collide(player, brick):
+            player.collide(brick.y + 50)
+            brick.collide_check = True
+        else:
+            brick.collide_check = False
+        if brick.collide_check == False: continue
+        brick_collision = True
+    if tikky_collision==False and brick_collision==False:
+        player.min_y = -200
+
+
+
+
+
 
 
 

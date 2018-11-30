@@ -9,7 +9,7 @@ class Brick:
         self.off_set_x = 0
         self.x,self.y = pos[0],pos[1]
         self.sizex,self.sizey = size[0],size[1]
-
+        self.collide_check = False
     def get_bb(self):
         self.sx = self.x - (self.bg.window_left)
         return self.sx - self.sizex, self.y - self.sizey, self.sx + self.sizex, self.y + self.sizey

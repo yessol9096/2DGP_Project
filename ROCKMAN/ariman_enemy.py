@@ -23,7 +23,8 @@ class Tikky:
         self.x = pos[0]
         self.y = pos[1]
         self.off_set_x = 0
-
+        self.collide_y = self.y + 115
+        self.collide_check = False
     def get_bb(self):
         self.sx = self.x - (self.bg.window_left)
         return self.sx - 100, self.y - 100, self.sx + 100, self.y + 85
@@ -70,6 +71,7 @@ class Lightning_lord:
         self.FRAMES_PER_DEGREE = 360
         self.PIXEL_PER_METER = (10.0 / 0.3)
 
+        self.collide_check = False
     def update(self):
         self.frame = (self.frame + 2 * 0.5 * game_framework.frame_time) % 2
 
