@@ -10,7 +10,6 @@ FRAMES_PER_ACTION = 15
 
 
 class Tikky:
-
     def __init__(self, pos):
         self.image = load_image('resource/enemy/Tikky.png')
         self.canvas_width = get_canvas_width()
@@ -25,6 +24,7 @@ class Tikky:
         self.off_set_x = 0
         self.collide_y = self.y + 115
         self.collide_check = False
+
     def get_bb(self):
         self.sx = self.x - (self.bg.window_left)
         return self.sx - 100, self.y - 100, self.sx + 100, self.y + 85
@@ -108,6 +108,12 @@ class Fan_fined:
         self.x = pos[0]
         self.y = pos[1]
         self.off_set_x = 0
+        self.damage = False
+        self.hp = 60
+        self.time = 0
+    def get_bb(self):
+        self.sx = self.x - (self.bg.window_left)
+        return self.sx - 50, self.y - 50, self.sx + 50, self.y + 50
 
     def update(self):
         self.frame = (self.frame + 8* ACTION_PER_TIME * game_framework.frame_time) % 8
@@ -121,6 +127,13 @@ class Fan_fined:
 
     def draw(self):
         self.sx = self.x - (self.bg.window_left)
-        self.image.clip_draw(int(self.frame) * 40, 0, 40, 31, self.sx, self.y, 100, 90)
-
+        draw_rectangle(*self.get_bb())
+        if (self.damage == False):
+            self.image.clip_draw(int(self.frame) * 40, 31, 40, 31, self.sx, self.y, 100, 90)
+        else:
+            self.image.clip_draw(0, 0, 40, 31, self.sx, self.y, 100, 90)
+            self.time += 0.1
+            if(self.time > 0.7):
+                self.damage = False
+                self.time = 0
 

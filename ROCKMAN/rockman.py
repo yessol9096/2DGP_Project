@@ -8,7 +8,7 @@ from sound_manager import *
 # Rockman Run Speed
 # fill expressions correctly
 PIXEL_PER_METER = (10.0 / 0.3)
-RUN_SPEED_KMPH = 30.0
+RUN_SPEED_KMPH = 60.0
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -263,11 +263,10 @@ class StartState:
 
     @staticmethod
     def do(rockman):
-        if (rockman.y > 350):
+        if (rockman.y > rockman.min_y):
             rockman.y -= ENTER_SPEED_PPS * game_framework.frame_time
-        if(rockman.y <= 350):
+        if(rockman.y <= rockman.min_y):
             rockman.add_event(LANDING)
-            #rockman.y = 350
         rockman.rollsecreen_set_player_pos_x()
     @staticmethod
     def draw(rockman):
@@ -288,7 +287,7 @@ class Rockman:
     start_image = None
     image = None
     def __init__(self):
-        self.x, self.y =800 // 2, 350
+        self.x, self.y =800 // 2, 900
         # Boy is only once created, so instance image loading is fine
         if(Rockman.image == None):
             self.image = load_image('resource/rockman/rockman240x280.png')
@@ -315,7 +314,7 @@ class Rockman:
         self.off_set_x = self.x - self.bg.window_left
 
     def get_bb(self):
-        return self.off_set_x - 40, self.y -30, self.off_set_x + 40, self.y + 40
+        return self.off_set_x - 30, self.y -30, self.off_set_x + 30, self.y + 30
 
     def set_background(self, bg):
         self.bg = bg
@@ -329,7 +328,7 @@ class Rockman:
     def attack(self):
         self.bullet_x =  self.off_set_x
         bullet = Bullet(self.bullet_x, self.y, self.dir)
-        game_world.add_object(bullet, 1)
+        game_world.add_object(bullet, 2)
 
     def add_event(self, event):
         self.event_que.insert(0, event)
@@ -345,8 +344,10 @@ class Rockman:
             self.y -= 0.98
 
     def draw(self):
+        self.fx, self.fy = self.x - self.bg.window_left, self.y - self.bg.window_bottom
         self.cur_state.draw(self)
         draw_rectangle(*self.get_bb())
+        self.font.draw(self.fx - 60, self.fy - 50, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:

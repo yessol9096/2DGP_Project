@@ -15,12 +15,14 @@ from airman_stage_brick import Brick
 name = "MainState"
 tikkys_position = [(950,300), (1500, 250), (2000, 350), (2450, 330), (2900, 330), (7900, 330), (8270, 360)]
 lightning_lord_position = [(3800,350,8,8), (4100, 350, 6, 6), (4600, 350, 5, 4), (5000, 350, 5, 5)]
-fan_fineds_position = [(9600,465), (11500,465), (11750, 557)]
-bricks_num = 5
-bricks_position = [(345,300), (1212, 400), (1705,400), (2215,445) , (2500,500)]
-bricks_size = [(400,20), (46,20), (23,20), (23,20), (23,20)]
+fan_fineds_position = [(8400,480), (11210,480), (11750, 570)]
+bricks_num = 24
+bricks_position = [(345,325), (1225, 415), (1730,415), (2255,455) ,(2735,415), (3238,415), (6415,325),(7730,325),(8105,325), (8375,410), (8570,500)
+                   ,(8800, 325),(9140,325),(9430,325),(9640,325),(9860,325),(10090,325),(10230,415),(10500,500),(10900,325),(11200,415), (11430,500), (11710,500),(12175,325)]
+bricks_size = [(400,20), (46,20), (23,20), (23,20), (23,20), (69,20), (1100, 20), (115,20), (160, 20),(90,20),(90,20), (135, 20),(90,20),(90,20),(23,20),(90,20),(43,20)
+               ,(85,10),(160,10),(135,20),(85,10),(85,20),(85,20),(355,20)]
 player = None
-
+testx = 11000
 tikkys = []
 lightning_lord_positions = []
 fan_fineds = []
@@ -72,7 +74,7 @@ def enter():
     game_world.add_objects(bricks, 1)
     game_world.add_object(player, 1)
 
-
+    player.x = testx
 def exit():
     game_world.clear()
 
@@ -111,15 +113,27 @@ def update():
 
     for brick in bricks:
         if collide(player, brick):
-            player.collide(brick.y + 50)
+            player.collide(brick.collide_y)
             brick.collide_check = True
         else:
             brick.collide_check = False
         if brick.collide_check == False: continue
         brick_collision = True
+
     if tikky_collision==False and brick_collision==False:
         player.min_y = -200
+    # fan_fined 와 bullet 충돌처리
+    for bullet in game_world.objects[2]:
+        for fan_fined in fan_fineds:
+            if collide(bullet, fan_fined):
+                fan_fined.damage = True
+                fan_fined.hp -= 10
+                game_world.remove_object(bullet)
 
+
+    for fan_fined in fan_fineds:
+        if(fan_fined.hp < 0):
+            game_world.remove_object(fan_fined)
 
 
 

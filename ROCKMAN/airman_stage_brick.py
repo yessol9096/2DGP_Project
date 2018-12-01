@@ -7,9 +7,10 @@ class Brick:
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.off_set_x = 0
-        self.x,self.y = pos[0],pos[1]
-        self.sizex,self.sizey = size[0],size[1]
+        self.x,self.y = pos[0],pos[1]+10
+        self.sizex,self.sizey = size[0],10
         self.collide_check = False
+        self.collide_y = self.y + self.sizey*4
     def get_bb(self):
         self.sx = self.x - (self.bg.window_left)
         return self.sx - self.sizex, self.y - self.sizey, self.sx + self.sizex, self.y + self.sizey
@@ -27,7 +28,8 @@ class Brick:
 
     def draw(self):
         self.sx = self.x - (self.bg.window_left)
-        draw_rectangle(*self.get_bb())
+        #draw_rectangle(*self.get_bb())
+
 
 
 
