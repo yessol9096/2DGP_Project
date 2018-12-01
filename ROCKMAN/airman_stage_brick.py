@@ -4,6 +4,7 @@ from pico2d import *
 class Brick:
 
     def __init__(self, pos, size):
+        self.name = Brick
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.off_set_x = 0

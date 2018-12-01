@@ -8,7 +8,7 @@ import game_world
 
 from rockman import Rockman
 from airman_background import Airman_background
-from ariman_enemy import Tikky, Lightning_lord, Fan_fined
+from ariman_enemy import Tikky, Cloud, Fan_fined
 
 
 name = "MainState"
@@ -23,7 +23,7 @@ def enter():
 
     # 적 생성, 위치조정
     tikkys = [Tikky(tikkys_position[i]) for i in range(7)]
-    lightning_lords = [Lightning_lord(lightning_lord_position[i]) for i in range(4)]
+    lightning_lords = [Cloud(lightning_lord_position[i]) for i in range(4)]
     fan_fineds = [Fan_fined(fan_fineds_position[i]) for i in range(3)]
 
     background = Airman_background()

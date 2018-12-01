@@ -11,6 +11,7 @@ FRAMES_PER_ACTION = 15
 
 class Tikky:
     def __init__(self, pos):
+        self.name = Tikky
         self.image = load_image('resource/enemy/Tikky.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
@@ -23,7 +24,6 @@ class Tikky:
         self.y = pos[1]
         self.off_set_x = 0
         self.collide_y = self.y + 115
-        self.collide_check = False
 
     def get_bb(self):
         self.sx = self.x - (self.bg.window_left)
@@ -47,9 +47,10 @@ class Tikky:
         draw_rectangle(*self.get_bb())
 
 
-class Lightning_lord:
+class Cloud:
 
     def __init__(self, Info):
+        self.name = Cloud
         self.image = load_image('resource/enemy/cloud.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
@@ -71,11 +72,12 @@ class Lightning_lord:
         self.FRAMES_PER_DEGREE = 360
         self.PIXEL_PER_METER = (10.0 / 0.3)
 
-        self.collide_check = False
     def update(self):
         self.frame = (self.frame + 2 * 0.5 * game_framework.frame_time) % 2
 
-        #self.off_set()
+    def get_bb(self):
+        self.sx = self.x - (self.bg.window_left)
+        return self.sx - 30, self.y - 20, self.sx + 30, self.y + 20
 
     def set_background(self, bg):
         self.bg = bg
@@ -91,12 +93,13 @@ class Lightning_lord:
 
     def draw(self):
         self.circle()
-        self.sx = self.x - (self.bg.window_left)
         self.image.clip_draw( int(self.frame) *40, 0, 40, 32, self.sx, self.y, 100, 100)
+        draw_rectangle(*self.get_bb())
 
 class Fan_fined:
 
     def __init__(self, pos):
+        self.name = Fan_fined
         self.image = load_image('resource/enemy/Fan_Fined.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
