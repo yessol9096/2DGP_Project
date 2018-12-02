@@ -8,14 +8,13 @@ import game_world
 
 from rockman import Rockman
 from airman_background import Airman_bossbackground
-from game_ui import Player_hp, Airman_hp
+from game_ui import Player_hp
 from airman import Airman
 
 
 player = None
 player_hp = None
 airman = None
-airman_hp = None
 
 def collide(a, b):
     # fill here
@@ -30,22 +29,21 @@ def collide(a, b):
     return True
 
 def enter():
-    global player, airman, player_hp, airman_hp
+    global player, airman
     player = Rockman()
-    airman = Airman(600,190)
+    airman = Airman(100,190)
     player.clamp_x = 80
     background = Airman_bossbackground()
     background.set_center_object(player)
-    player.cur_stage = 'airmanboss_stage'
+
     player.set_background(background)
 
     player_hp = Player_hp(player.hp)
-    airman_hp = Airman_hp(airman.hp)
+
     game_world.add_object(background, 0)
     game_world.add_object(player, 1)
     game_world.add_object(player_hp, 1)
     game_world.add_object(airman, 1)
-    game_world.add_object(airman_hp, 1)
 
 
 def exit():
@@ -71,40 +69,14 @@ def handle_events():
 
 
 def update():
-    global airman_hp, player_hp, airman, player
     for game_object in game_world.all_objects():
         game_object.update()
 
-    # 총알과 에어맨 충돌체크
     for bullet in game_world.objects[2]:
         if collide(bullet, airman):
+            airman.damage = True
             game_world.remove_object(bullet)
-            airman.hp -= 1
-
-    # 총알과 토네이도 충돌체크
-    for bullet in game_world.objects[2]:
-        for tornado in game_world.objects[3]:
-            if collide(bullet, tornado):
-                game_world.remove_object(bullet)
-
-    #토네이도와 플레이어 충돌
-    for tornado in game_world.objects[3]:
-        if collide(player, tornado):
-            game_world.remove_object(tornado)
-            player.hp -= 2
-
-    #에어맨 플레이어 충돌
-    if collide(player, airman):
-        if(player.damage_check == False):
-            player.damage_check = True
-            if(player.dir == 1):
-                player.x -= 10
-            else:
-                player.x += 10
-
-
-    player_hp.hp = player.hp
-    airman_hp.hp = airman.hp
+            airman.attack()
 
 
 

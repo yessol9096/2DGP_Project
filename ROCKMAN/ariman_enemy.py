@@ -11,7 +11,7 @@ FRAMES_PER_ACTION = 15
 
 class Tikky:
     def __init__(self, pos):
-        self.name = 'Tikky'
+        self.name = Tikky
         self.image = load_image('resource/enemy/Tikky.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
@@ -50,7 +50,7 @@ class Tikky:
 class Cloud:
 
     def __init__(self, Info):
-        self.name = 'Cloud'
+        self.name = Cloud
         self.image = load_image('resource/enemy/cloud.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
@@ -99,7 +99,7 @@ class Cloud:
 class Fan_fined:
 
     def __init__(self, pos):
-        self.name = 'Fan_fined'
+        self.name = Fan_fined
         self.image = load_image('resource/enemy/Fan_Fined.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()

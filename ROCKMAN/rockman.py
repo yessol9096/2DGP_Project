@@ -61,7 +61,6 @@ class IdleState:
 
     @staticmethod
     def enter(rockman, event):
-        rockman.now_state = 'IdleState'
         if event == RIGHT_DOWN:
             rockman.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -97,7 +96,6 @@ class RunState:
 
     @staticmethod
     def enter(rockman, event):
-        rockman.now_state = 'RunState'
         if event == RIGHT_DOWN:
             rockman.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -133,7 +131,6 @@ class Idle_attackState:
 
     @staticmethod
     def enter(rockman, event):
-        rockman.now_state = 'Idle_attackState'
         if event == RIGHT_DOWN:
             rockman.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -164,7 +161,6 @@ class Run_attackState:
 
     @staticmethod
     def enter(rockman, event):
-        rockman.now_state = 'Run_attackState'
         if event == RIGHT_DOWN:
             rockman.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -202,7 +198,6 @@ class JumpState:
 
     @staticmethod
     def enter(rockman, event):
-        rockman.now_state = 'JumpState'
         global frame_y
         frame_y = 0
         if event == RIGHT_DOWN:
@@ -247,7 +242,6 @@ class JumpState:
 class FallingState:
     @staticmethod
     def enter(rockman, event):
-        rockman.now_state = 'FallingState'
         global frame_y
         frame_y = 0
         start_time = get_time()
@@ -263,7 +257,7 @@ class FallingState:
         rockman.y -= FALL_SPEED_PPS*0.98 * now_time * now_time
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
         rockman.rollsecreen_set_player_pos_x()
-        if(rockman.fall_check == False or rockman.y < rockman.min_y) :
+        if(rockman.fall_check == False or rockman.y < -500) :
             rockman.add_event(LANDING);
             rockman.fall_time = 0
 
@@ -279,7 +273,6 @@ class StartState:
     global frame_x
     @staticmethod
     def enter(rockman, event):
-        rockman.now_state = 'StartState'
         global frame_y
         frame_y = 0
         start_time = get_time()
@@ -307,7 +300,7 @@ next_state_table = {
     RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, SPACE: RunState, ATTACK: Run_attackState, ATTACK_OFF: RunState, JUMP: JumpState, FALLING:FallingState},
     Idle_attackState: {RIGHT_UP: Idle_attackState, LEFT_UP: Idle_attackState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, ATTACK_OFF: IdleState,ATTACK: Idle_attackState, JUMP: JumpState, FALLING:FallingState},
     Run_attackState: {RIGHT_UP: Idle_attackState, LEFT_UP: Idle_attackState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, ATTACK_OFF: RunState, ATTACK: Run_attackState, JUMP: JumpState, FALLING:FallingState},
-    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState, RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, ATTACK: JumpState, ATTACK_OFF: JumpState ,JUMP:JumpState,LANDING: IdleState, FALLING:FallingState},
+    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState, RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, ATTACK: JumpState, ATTACK_OFF: JumpState ,JUMP:JumpState,LANDING: IdleState},
     FallingState: {RIGHT_UP: FallingState, LEFT_UP: FallingState, LEFT_DOWN: FallingState, RIGHT_DOWN: FallingState, ATTACK_OFF: FallingState, ATTACK: FallingState, JUMP: FallingState,LANDING: IdleState, FALLING:FallingState}
 }
 
@@ -344,8 +337,6 @@ class Rockman:
         self.bg = None
         self.cur_stage = 'airmanboss_stage'
         self.clamp_x = 0
-        self.damage_check = False
-        self.now_state = 'StartState'
 
     def rollsecreen_set_player_pos_x(self):
         if (self.cur_stage == 'airman_stage'):
@@ -354,7 +345,7 @@ class Rockman:
             self.off_set_x = self.x
 
     def get_bb(self):
-        return self.off_set_x - 30, self.y -30, self.off_set_x + 30, self.y + 40
+        return self.off_set_x - 30, self.y -30, self.off_set_x + 30, self.y + 30
 
     def set_background(self, bg):
         self.bg = bg
@@ -389,12 +380,8 @@ class Rockman:
         if (self.cur_stage == 'airmanboss_stage'):
             self.min_y = 170
 
-        if (self.damage_check == True):
-            self.hp -= 1
-            self.damage_check = False
-
-        if (self.fall_check == True and self.cur_state != StartState and self.cur_state != JumpState):
-            self.add_event(FALLING)
+        #if (self.fall_check == True and self.cur_state != StartState and self.cur_state != JumpState):
+            #self.add_event(FALLING)
 
     def draw(self):
         self.fx, self.fy = self.x - self.bg.window_left, self.y - self.bg.window_bottom

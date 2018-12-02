@@ -3,7 +3,7 @@
 # layer 1: Foreground Objects
 # layer 2: bullets
 # layer 3: player, ui
-
+# layer 4: tornado
 objects = [[],[],[],[],[]]
 
 

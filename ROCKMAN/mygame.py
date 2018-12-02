@@ -6,5 +6,5 @@ import start_state
 import airmanboss_stage
 
 pico2d.open_canvas(800, 700)
-game_framework.run(airman_stage)
+game_framework.run(airmanboss_stage)
 pico2d.close_canvas()

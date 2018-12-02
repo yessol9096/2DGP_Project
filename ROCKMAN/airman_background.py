@@ -4,7 +4,6 @@ import game_framework
 # Backgound Animation Speed
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-ROLL_FRAMES_PER_ACTION = 2
 FRAMES_PER_ACTION = 1
 
 class Airman_stagebackground:
@@ -19,7 +18,7 @@ class Airman_stagebackground:
         self.window_bottom = 0
         self.frame = 0
     def update(self):
-        self.frame = (self.frame + ROLL_FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % ROLL_FRAMES_PER_ACTION
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
         self.window_left = clamp(0, int(self.set_center_object.x) - self.canvas_width // 2, self.w - self.canvas_width)
 
     def draw(self):
