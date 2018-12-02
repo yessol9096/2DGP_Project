@@ -334,9 +334,14 @@ class Rockman:
         self.idle_check = True
         self.fall_check = False
         self.fall_time = 0
+        self.bg = None
+        self.cur_stage = 'airmanboss_stage'
 
     def rollsecreen_set_player_pos_x(self):
-        self.off_set_x = self.x - self.bg.window_left
+        if (self.cur_stage == 'airman_stage'):
+            self.off_set_x = self.x - self.bg.window_left
+        elif(self.cur_stage == 'airmanboss_stage'):
+            self.off_set_x = self.x
 
     def get_bb(self):
         return self.off_set_x - 30, self.y -30, self.off_set_x + 30, self.y + 30
@@ -366,11 +371,13 @@ class Rockman:
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
 
-        print(self.cur_state)
         if (self.cur_state == IdleState):
             self.idle_check = True
         else:
             self.idle_check = False
+
+        if (self.cur_stage == 'airmanboss_stage'):
+            self.min_y = 170
 
         #if (self.fall_check == True and self.cur_state != StartState and self.cur_state != JumpState):
             #self.add_event(FALLING)

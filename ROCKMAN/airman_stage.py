@@ -7,9 +7,9 @@ import game_framework
 import game_world
 
 from rockman import Rockman
-from airman_background import Airman_background
+from airman_background import Airman_stagebackground
 from ariman_enemy import Tikky, Cloud, Fan_fined
-from airman_stage_brick import Brick
+from airman_brick import Brick
 from game_ui import Player_hp
 
 
@@ -50,7 +50,7 @@ def enter():
     clouds = [Cloud(cloud_position[i]) for i in range(6)]
     fan_fineds = [Fan_fined(fan_fineds_position[i]) for i in range(3)]
     bricks = [Brick(bricks_position[i],bricks_size[i]) for i in range(bricks_num)]
-    background = Airman_background()
+    background = Airman_stagebackground()
     background.set_center_object(player)
 
     for tikky in tikkys:
