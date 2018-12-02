@@ -9,13 +9,29 @@ import game_world
 from rockman import Rockman
 from airman_background import Airman_bossbackground
 from game_ui import Player_hp
+from airman import Airman
 
 player = None
 player_hp = None
-def enter():
-    global player
-    player = Rockman()
+airman = None
 
+def collide(a, b):
+    # fill here
+    left_a, bottom_a, right_a, top_a = a.get_bb()
+    left_b, bottom_b, right_b, top_b = b.get_bb()
+
+    if left_a > right_b: return False
+    if right_a < left_b: return False
+    if top_a < bottom_b: return False
+    if bottom_a > top_b: return False
+
+    return True
+
+def enter():
+    global player, airman
+    player = Rockman()
+    airman = Airman(600,190)
+    player.clamp_x = 80
     background = Airman_bossbackground()
     background.set_center_object(player)
 
@@ -26,6 +42,7 @@ def enter():
     game_world.add_object(background, 0)
     game_world.add_object(player, 1)
     game_world.add_object(player_hp, 1)
+    game_world.add_object(airman, 1)
 
 
 def exit():
@@ -53,6 +70,12 @@ def handle_events():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
+
+    for bullet in game_world.objects[2]:
+        if collide(bullet, airman):
+            airman.damage = True
+            game_world.remove_object(bullet)
+
 
 
 def draw():

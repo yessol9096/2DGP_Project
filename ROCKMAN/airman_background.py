@@ -34,7 +34,7 @@ class Airman_bossbackground:
         #self.cloud_image = load_image('resuorce/stage/cloud.png')
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
-        self.w = self.canvas_width
+        self.w = self.canvas_width - 80
         self.h = self.canvas_height
         self.speed = 0
         self.window_left = 0

@@ -80,7 +80,7 @@ class IdleState:
     @staticmethod
     def do(rockman):
         rockman.frame = (rockman.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
-        rockman.x = clamp(0, rockman.x, rockman.bg.w)
+        rockman.x = clamp(rockman.clamp_x, rockman.x, rockman.bg.w)
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
         rockman.rollsecreen_set_player_pos_x()
 
@@ -114,7 +114,7 @@ class RunState:
     def do(rockman):
         rockman.frame = (rockman.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
         rockman.x += rockman.velocity * game_framework.frame_time
-        rockman.x = clamp(0, rockman.x, rockman.bg.w)
+        rockman.x = clamp(rockman.clamp_x, rockman.x, rockman.bg.w)
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
         rockman.rollsecreen_set_player_pos_x()
 
@@ -148,7 +148,7 @@ class Idle_attackState:
 
     @staticmethod
     def do(rockman):
-        rockman.x = clamp(0, rockman.x, rockman.bg.w)
+        rockman.x = clamp(rockman.clamp_x, rockman.x, rockman.bg.w)
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
     @staticmethod
     def draw(rockman):
@@ -181,7 +181,7 @@ class Run_attackState:
     def do(rockman):
         rockman.frame = (rockman.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
         rockman.x += rockman.velocity * game_framework.frame_time
-        rockman.x = clamp(0, rockman.x, rockman.bg.w)
+        rockman.x = clamp(rockman.clamp_x, rockman.x, rockman.bg.w)
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
 
     @staticmethod
@@ -223,7 +223,7 @@ class JumpState:
         rockman.jump_time += game_framework.frame_time
         rockman.y += JUMP_SPEED_PPS * now_time - FALL_SPEED_PPS*0.98 * now_time * now_time
         rockman.x += rockman.velocity * game_framework.frame_time
-        rockman.x = clamp(0, rockman.x, rockman.bg.w)
+        rockman.x = clamp(rockman.clamp_x, rockman.x, rockman.bg.w)
         rockman.y = clamp(0, rockman.y, rockman.bg.h)
         rockman.rollsecreen_set_player_pos_x()
         if(rockman.y < rockman.min_y) :
@@ -336,6 +336,7 @@ class Rockman:
         self.fall_time = 0
         self.bg = None
         self.cur_stage = 'airmanboss_stage'
+        self.clamp_x = 0
 
     def rollsecreen_set_player_pos_x(self):
         if (self.cur_stage == 'airman_stage'):
