@@ -203,6 +203,7 @@ class JumpState:
     @staticmethod
     def enter(rockman, event):
         rockman.now_state = 'JumpState'
+        rockman.sound_manager.jump()
         global frame_y
         frame_y = 0
         if event == RIGHT_DOWN:
@@ -305,6 +306,7 @@ class StartState:
             rockman.y -= ENTER_SPEED_PPS * game_framework.frame_time
         if(rockman.y <= rockman.min_y):
             rockman.add_event(LANDING)
+            rockman.sound_manager.enter_stage()
         rockman.rollsecreen_set_player_pos_x()
     @staticmethod
     def draw(rockman):
@@ -356,6 +358,7 @@ class Rockman:
         self.cur_stage = 'airman_stage'
         self.clamp_x = 0
         self.now_state = 'StartState'
+        self.sound_manager = None
 
     def rollsecreen_set_player_pos_x(self):
         if (self.cur_stage == 'airman_stage'):
@@ -377,6 +380,7 @@ class Rockman:
 
     def attack(self):
         self.bullet_x =  self.off_set_x
+        self.sound_manager.shot()
         bullet = Bullet(self.bullet_x, self.y, self.dir)
         game_world.add_object(bullet, 2)
 
@@ -416,4 +420,7 @@ class Rockman:
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
+
+    def set_sound_manager(self, sm):
+        self.sound_manager = sm
 

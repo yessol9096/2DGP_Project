@@ -11,7 +11,7 @@ from airman_background import Airman_stagebackground
 from ariman_enemy import Tikky, Cloud, Fan_fined
 from airman_brick import Brick
 from game_ui import Player_hp
-
+from sound_manager import *
 
 name = "MainState"
 tikkys_position = [(950,300), (1500, 250), (2000, 350), (2450, 330), (2900, 330), (7900, 330), (8270, 360)]
@@ -29,6 +29,9 @@ clouds= []
 fan_fineds = []
 bricks= []
 player_hp = None
+sound_manager = None
+
+
 def collide(a, b):
     # fill here
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -42,7 +45,7 @@ def collide(a, b):
     return True
 
 def enter():
-    global player, bricks_num, player_hp
+    global player, bricks_num, player_hp, sound_manager
     player = Rockman()
     global tikkys, lightning_lords, fan_fineds, bricks
     # 적 생성, 위치조정
@@ -52,9 +55,11 @@ def enter():
     bricks = [Brick(bricks_position[i],bricks_size[i]) for i in range(bricks_num)]
     background = Airman_stagebackground()
     background.set_center_object(player)
-
+    sound_manager = Sound_Manager()
     player.clamp_x = 0
     player.now_state = 'airman_stage'
+
+    player.set_sound_manager(sound_manager)
 
     for tikky in tikkys:
         tikky.set_background(background)
@@ -85,6 +90,7 @@ def enter():
     player.x = testx
 def exit():
     game_world.clear()
+    del (sound_manager)
 
 def pause():
     pass
