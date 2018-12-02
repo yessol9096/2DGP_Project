@@ -53,6 +53,9 @@ def enter():
     background = Airman_stagebackground()
     background.set_center_object(player)
 
+    player.clamp_x = 0
+    player.cur_stae = 'airman_stage'
+
     for tikky in tikkys:
         tikky.set_background(background)
         tikky.set_center_object(player)

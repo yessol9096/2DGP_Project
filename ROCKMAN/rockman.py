@@ -244,6 +244,17 @@ class FallingState:
     def enter(rockman, event):
         global frame_y
         frame_y = 0
+        if event == RIGHT_DOWN:
+            rockman.velocity += RUN_SPEED_PPS
+        elif event == LEFT_DOWN:
+            rockman.velocity -= RUN_SPEED_PPS
+        elif event == RIGHT_UP:
+            rockman.velocity -= RUN_SPEED_PPS
+        elif event == LEFT_UP:
+            rockman.velocity += RUN_SPEED_PPS
+        if event == ATTACK:
+            rockman.attack()
+            frame_y = -80
         start_time = get_time()
 
     @staticmethod

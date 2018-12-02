@@ -33,7 +33,7 @@ class Tornado:
 
     def get_bb(self):
         # fill here
-        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+        return self.x - 30, self.y - 30, self.x + 30, self.y + 30
 
     def update(self):
         self.frame = (self.frame + 3 * ACTION_PER_TIME * game_framework.frame_time) % 3
@@ -48,5 +48,5 @@ class Tornado:
             game_world.remove_object(self)
 
     def draw(self):
-        self.tornado_image.clip_draw(int(self.frame) * 20, self.dir * 24, 20, 24, self.x , self.y, 70, 70)
+        self.tornado_image.clip_draw(int(self.frame) * 20, self.dir * 24, 20, 24, self.x , self.y, 90, 90)
         draw_rectangle(*self.get_bb())
