@@ -25,7 +25,6 @@ class Airman_stagebackground:
     def draw(self):
         self.image.clip_draw_to_origin(self.window_left,int(self.frame) * 700 ,self.canvas_width,self.canvas_width,0,0)
 
-
     def set_center_object(self, player):
         self.set_center_object = player
 

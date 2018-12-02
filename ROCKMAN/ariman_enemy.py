@@ -66,6 +66,7 @@ class Cloud:
         self.velocity = 1
         self.temp_y = self.y
         self.temp_x = self.x
+        self.collide_y = self.y + 50
 
         self.TIME_PER_CIRCLE = Info[3]
         self.CIRCLE_PER_TIME = 1.0 / self.TIME_PER_CIRCLE

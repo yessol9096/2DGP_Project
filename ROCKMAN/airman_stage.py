@@ -23,7 +23,7 @@ bricks_position = [(345,325), (1225, 415), (1730,415), (2255,455) ,(2735,415), (
 bricks_size = [(400,20), (46,20), (23,20), (23,20), (23,20), (69,20), (1100, 20), (115,20), (160, 20),(90,20),(90,20), (135, 20),(90,20),(90,20),(23,20),(90,20),(43,20)
                ,(85,10),(160,10),(135,20),(85,10),(85,20),(85,20),(355,20)]
 player = None
-testx = 400
+testx = 3200
 tikkys = []
 clouds= []
 fan_fineds = []
@@ -54,7 +54,7 @@ def enter():
     background.set_center_object(player)
 
     player.clamp_x = 0
-    player.cur_stae = 'airman_stage'
+    player.now_state = 'airman_stage'
 
     for tikky in tikkys:
         tikky.set_background(background)
@@ -110,18 +110,21 @@ def update():
         game_object.update()
 
     for obj in game_world.objects[1]:
-        if collide(player, obj):
-            if (obj.name == Cloud):
-                #if (player.idle_check == True):
-                player.x = obj.x
-                player.y,player.min_y = obj.y+50,obj.y+50
-                #player.fall_check = False
-            else:
-                player.min_y = obj.collide_y
+        if collide(obj, player):
+            player.fall_check = False
+            player.min_y = obj.collide_y
+            if (obj.name == 'Cloud'):
+                    player.x = obj.x
+                    player.y,player.min_y = obj.y + 50 , obj.collide_y
+            print("왜")
             break
         else:
+            print("헐")
             player.min_y = -200
             player.fall_check = True
+            #player.fall()
+
+    #player 와 tikky 충돌처리
 
 
     # fan_fined 와 bullet 충돌처리
@@ -140,7 +143,7 @@ def update():
             player.hp -= 1
 
     player_hp.hp = player.hp
-
+    print(player.now_state)
 
 
 

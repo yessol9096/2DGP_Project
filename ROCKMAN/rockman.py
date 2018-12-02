@@ -61,6 +61,7 @@ class IdleState:
 
     @staticmethod
     def enter(rockman, event):
+        rockman.now_state = 'IdleState'
         if event == RIGHT_DOWN:
             rockman.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -96,6 +97,7 @@ class RunState:
 
     @staticmethod
     def enter(rockman, event):
+        rockman.now_state = 'RunState'
         if event == RIGHT_DOWN:
             rockman.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -131,6 +133,7 @@ class Idle_attackState:
 
     @staticmethod
     def enter(rockman, event):
+        rockman.now_state = 'Idle_attackState'
         if event == RIGHT_DOWN:
             rockman.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -161,6 +164,7 @@ class Run_attackState:
 
     @staticmethod
     def enter(rockman, event):
+        rockman.now_state = 'Run_attackState'
         if event == RIGHT_DOWN:
             rockman.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -198,6 +202,7 @@ class JumpState:
 
     @staticmethod
     def enter(rockman, event):
+        rockman.now_state = 'JumpState'
         global frame_y
         frame_y = 0
         if event == RIGHT_DOWN:
@@ -242,6 +247,7 @@ class JumpState:
 class FallingState:
     @staticmethod
     def enter(rockman, event):
+        rockman.now_state = 'FallingState'
         global frame_y
         frame_y = 0
         if event == RIGHT_DOWN:
@@ -284,6 +290,7 @@ class StartState:
     global frame_x
     @staticmethod
     def enter(rockman, event):
+        rockman.now_state = 'StartState'
         global frame_y
         frame_y = 0
         start_time = get_time()
@@ -306,13 +313,13 @@ class StartState:
 
 
 next_state_table = {
-    StartState: {RIGHT_UP: StartState, LEFT_UP: StartState, RIGHT_DOWN: StartState, LEFT_DOWN: StartState, SPACE: StartState, ATTACK: StartState, ATTACK_OFF: StartState, JUMP: StartState, LANDING: IdleState, FALLING:FallingState},
-    IdleState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SPACE: IdleState, ATTACK: Idle_attackState, ATTACK_OFF: IdleState, JUMP: JumpState, FALLING:FallingState},
-    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, SPACE: RunState, ATTACK: Run_attackState, ATTACK_OFF: RunState, JUMP: JumpState, FALLING:FallingState},
-    Idle_attackState: {RIGHT_UP: Idle_attackState, LEFT_UP: Idle_attackState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, ATTACK_OFF: IdleState,ATTACK: Idle_attackState, JUMP: JumpState, FALLING:FallingState},
-    Run_attackState: {RIGHT_UP: Idle_attackState, LEFT_UP: Idle_attackState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, ATTACK_OFF: RunState, ATTACK: Run_attackState, JUMP: JumpState, FALLING:FallingState},
+    StartState: {RIGHT_UP: StartState, LEFT_UP: StartState, RIGHT_DOWN: StartState, LEFT_DOWN: StartState, SPACE: StartState, ATTACK: StartState, ATTACK_OFF: StartState, JUMP: StartState, LANDING: IdleState},
+    IdleState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SPACE: IdleState, ATTACK: Idle_attackState, ATTACK_OFF: IdleState, JUMP: JumpState},
+    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, SPACE: RunState, ATTACK: Run_attackState, ATTACK_OFF: RunState, JUMP: JumpState},
+    Idle_attackState: {RIGHT_UP: Idle_attackState, LEFT_UP: Idle_attackState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, ATTACK_OFF: IdleState,ATTACK: Idle_attackState, JUMP: JumpState},
+    Run_attackState: {RIGHT_UP: Idle_attackState, LEFT_UP: Idle_attackState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, ATTACK_OFF: RunState, ATTACK: Run_attackState, JUMP: JumpState},
     JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState, RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, ATTACK: JumpState, ATTACK_OFF: JumpState ,JUMP:JumpState,LANDING: IdleState},
-    FallingState: {RIGHT_UP: FallingState, LEFT_UP: FallingState, LEFT_DOWN: FallingState, RIGHT_DOWN: FallingState, ATTACK_OFF: FallingState, ATTACK: FallingState, JUMP: FallingState,LANDING: IdleState, FALLING:FallingState}
+    FallingState: {RIGHT_UP: FallingState, LEFT_UP: FallingState, LEFT_DOWN: FallingState, RIGHT_DOWN: FallingState, ATTACK_OFF: FallingState, ATTACK: FallingState, JUMP: FallingState,LANDING: IdleState}
 }
 
 class Rockman:
@@ -346,8 +353,9 @@ class Rockman:
         self.fall_check = False
         self.fall_time = 0
         self.bg = None
-        self.cur_stage = 'airmanboss_stage'
+        self.cur_stage = 'airman_stage'
         self.clamp_x = 0
+        self.now_state = 'StartState'
 
     def rollsecreen_set_player_pos_x(self):
         if (self.cur_stage == 'airman_stage'):
@@ -391,8 +399,12 @@ class Rockman:
         if (self.cur_stage == 'airmanboss_stage'):
             self.min_y = 170
 
-        #if (self.fall_check == True and self.cur_state != StartState and self.cur_state != JumpState):
-            #self.add_event(FALLING)
+        if (self.y > self.min_y and self.fall_check == True and self.cur_state != StartState and self.cur_state != JumpState):
+            self.y -= 5
+
+    def fall(self):
+        if (self.min_y == -200 and self.fall_check == True and self.now_state != 'StartState' and self.now_state != 'JumpState'):
+            self.add_event(FALLING)
 
     def draw(self):
         self.fx, self.fy = self.x - self.bg.window_left, self.y - self.bg.window_bottom
