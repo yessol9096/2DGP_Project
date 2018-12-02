@@ -11,6 +11,7 @@ from airman_background import Airman_bossbackground
 from game_ui import Player_hp
 from airman import Airman
 
+
 player = None
 player_hp = None
 airman = None
@@ -30,7 +31,7 @@ def collide(a, b):
 def enter():
     global player, airman
     player = Rockman()
-    airman = Airman(600,190)
+    airman = Airman(100,190)
     player.clamp_x = 80
     background = Airman_bossbackground()
     background.set_center_object(player)
@@ -75,6 +76,7 @@ def update():
         if collide(bullet, airman):
             airman.damage = True
             game_world.remove_object(bullet)
+            airman.attack()
 
 
 

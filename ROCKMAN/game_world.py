@@ -3,7 +3,8 @@
 # layer 1: Foreground Objects
 # layer 2: bullets
 # layer 3: player, ui
-objects = [[],[],[],[]]
+# layer 4: tornado
+objects = [[],[],[],[],[]]
 
 
 def add_object(o, layer):
