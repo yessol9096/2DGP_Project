@@ -37,17 +37,31 @@ class Airman:
         self.dir = 0
         self.damage = False
         self.time = 0
-        self.cur_state = 'attack'
-
+        self.cur_state = 'jump'
+        self.jump_time = 0
     def get_bb(self):
         # fill here
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
 
     def update(self):
         self.frame = (self.frame + 3 * ACTION_PER_TIME * game_framework.frame_time) % 3
+        if(self.cur_state == 'jump'):
+            self.jump()
 
     def jump(self):
-        pass
+        self.jump_time += game_framework.frame_time
+        r = math.pi / 180
+        if(self.y >= 190):
+            if(self.dir == 1):
+                self.x = self.x + 5*math.cos(105*r)*self.jump_time
+                self.y = self.y + (5*math.sin(105*r) - 0.98*self.jump_time*5.0)*self.jump_time
+            else:
+                self.x = self.x - 5 * math.cos(105 * r) * self.jump_time
+                self.y = self.y + (5 * math.sin(105 * r) - 0.98 * self.jump_time * 5.0) * self.jump_time
+        else:
+            self.jump_time = 0
+            self.y = 190
+            self.cur_state = 'idle'
 
     def attack(self):
         r = math.pi / 180
@@ -76,6 +90,8 @@ class Airman:
             self.image.clip_draw(0, self.dir * 40, 40, 40, self.x, self.y, 120, 120)
         elif(self.cur_state == 'attack'):
             self.image.clip_draw(160, self.dir * 40, 40, 40, self.x, self.y, 120, 120)
+        elif(self.cur_state == 'jump'):
+            self.image.clip_draw(40, self.dir * 40, 40, 40, self.x, self.y, 120, 120)
         if(self.damage == True):
             self.hit_image.clip_draw(0, 0, 30, 30, self.x, self.y, 120, 120)
             self.time += 0.1
