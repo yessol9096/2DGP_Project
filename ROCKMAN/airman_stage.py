@@ -28,7 +28,7 @@ bricks_position = [(345,325), (1225, 415), (1730,415), (2255,455) ,(2735,415), (
 bricks_size = [(400,20), (46,20), (23,20), (23,20), (23,20), (69,20), (1100, 20), (115,20), (160, 20),(90,20),(90,20), (135, 20),(90,20),(90,20),(23,20),(90,20),(43,20)
                ,(85,10),(160,10),(135,20),(85,10),(85,20),(85,20),(355,20)]
 player = None
-testx = 12000
+testx = 400
 tikkys = []
 clouds= []
 fan_fineds = []
@@ -130,11 +130,11 @@ def update():
             if (obj.name == 'Cloud'):
                     player.x = obj.x
                     player.y,player.min_y = obj.y + 50 , obj.collide_y
+                    player.fall_check = False
             break
         else:
-            player.min_y = -200
+            player.min_y = 0
             player.fall_check = True
-            #player.fall()
 
     #player 와 tikky 충돌처리
 
@@ -151,13 +151,14 @@ def update():
     for fan_fined in fan_fineds:
         if(fan_fined.hp < 0):
             game_world.remove_object(fan_fined)
-        if collide(player, fan_fined):
-            player.hp -= 1
-            if(player.dir == 0):
-                player.x -= 3
-            else:
-                player.x += 3
-            sound_manager.damaged()
+        else:
+            if collide(player, fan_fined):
+                player.hp -= 1
+                if(player.dir == 0):
+                    player.x += 3
+                else:
+                    player.x -= 3
+                sound_manager.damaged()
 
     player_hp.hp = player.hp
     if(player.hp < 0):

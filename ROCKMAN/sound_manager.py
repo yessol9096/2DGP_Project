@@ -70,7 +70,7 @@ class Sound_Manager:
         if self.stage_bgm == None:
             self.stage_bgm = load_music('resource/bgm/airman.mp3')
             self.stage_bgm.set_volume(64)
-            self.stage_bgm.play()
+            self.stage_bgm.repeat_play()
 
     def title_start(self):
         if self.title_bgm == None:
