@@ -7,6 +7,8 @@ import game_framework
 import game_world
 import boss_state
 import title_state
+import gameover_state
+
 
 from rockman import Rockman
 from airman_background import Airman_stagebackground
@@ -151,8 +153,15 @@ def update():
             game_world.remove_object(fan_fined)
         if collide(player, fan_fined):
             player.hp -= 1
+            if(player.dir == 0):
+                player.x -= 3
+            else:
+                player.x += 3
+            sound_manager.damaged()
 
     player_hp.hp = player.hp
+    if(player.hp < 0):
+        game_framework.change_state(gameover_state)
 
 
     if (player.x > next_boss_stage):
