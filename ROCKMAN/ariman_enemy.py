@@ -94,6 +94,7 @@ class Cloud:
 
     def draw(self):
         self.circle()
+        self.sx = self.x - (self.bg.window_left)
         self.image.clip_draw( int(self.frame) *40, 0, 40, 32, self.sx, self.y, 100, 100)
         draw_rectangle(*self.get_bb())
 

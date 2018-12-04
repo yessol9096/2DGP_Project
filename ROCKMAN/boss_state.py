@@ -1,15 +1,16 @@
 import game_framework
 from pico2d import *
 import title_state
+import airmanboss_stage
 
-name = "StartState"
+name = "BossState"
 image = None
 logo_time = 0.0
 
 
 def enter():
     global image
-    image = load_image('resource/state/loading.png')
+    image = load_image('resource/state/boss_state.png')
 
 
 def exit():
@@ -19,11 +20,9 @@ def exit():
 
 def update():
     global logo_time
-
-    if(logo_time > 1.0):
+    if(logo_time > 0.5):
+        game_framework.change_state(airmanboss_stage)
         logo_time = 0
-        game_framework.change_state(title_state)
-    delay(0.01)
     logo_time += 0.01
 
 

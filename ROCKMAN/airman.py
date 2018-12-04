@@ -60,7 +60,9 @@ class Airman:
             if (self.idle_time > 3):
                 self.cur_state = 'jump'
                 self.idle_time = 0
-
+        if (self.hp < 0):
+            self.cur_state = 'dead'
+            
     def jump(self):
         self.jump_time += game_framework.frame_time
         r = math.pi / 180
@@ -80,8 +82,6 @@ class Airman:
             else:
                 self.dir = 1
             self.cur_state = 'attack'
-            if (self.hp < 0):
-                self.cur_state = 'dead'
 
     def attack(self):
         r = math.pi / 180

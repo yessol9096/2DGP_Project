@@ -10,12 +10,14 @@ from rockman import Rockman
 from airman_background import Airman_bossbackground
 from game_ui import Player_hp, Airman_hp
 from airman import Airman
+from sound_manager import *
 
 
 player = None
 player_hp = None
 airman = None
 airman_hp = None
+sound_manager = None
 
 def collide(a, b):
     # fill here
@@ -30,19 +32,21 @@ def collide(a, b):
     return True
 
 def enter():
-    global player, airman, player_hp, airman_hp
+    global player, airman, player_hp, airman_hp, sound_manager
     player = Rockman()
     airman = Airman(600, 190)
     player.clamp_x = 80
     background = Airman_bossbackground()
     background.set_center_object(player)
+    sound_manager = Sound_Manager()
 
     player.set_background(background)
     player.cur_stage = 'airmanboss_stage'
     player_hp = Player_hp(player.hp)
+    player.set_sound_manager(sound_manager)
 
     airman_hp = Airman_hp(airman.hp)
-
+    sound_manager.battle_start()
     game_world.add_object(background, 0)
     game_world.add_object(player, 1)
     game_world.add_object(player_hp, 1)
@@ -51,7 +55,9 @@ def enter():
 
 
 def exit():
+    global sound_manager
     game_world.clear()
+    del (sound_manager)
 
 def pause():
     pass
@@ -98,12 +104,11 @@ def update():
 
         # 에어맨 플레이어 충돌
     if collide(player, airman):
-        if (player.damage_check == False):
-            player.damage_check = True
-            if (player.dir == 1):
-                player.x -= 10
-            else:
-                player.x += 10
+        player.hp -= 2
+        if (player.dir == 1):
+            player.x -= 10
+        else:
+            player.x += 10
 
     player_hp.hp = player.hp
     airman_hp.hp = airman.hp

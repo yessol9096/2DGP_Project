@@ -1,14 +1,18 @@
 import game_framework
 from pico2d import *
-import airman_stage
+import stage_state
+from sound_manager import *
 
-name = "TitleState"
+name = "StageState"
 image = None
+sound_manager = None
 
 
 def enter():
-    global image
+    global image, sound_manager
     image = load_image('resource/state/title.png')
+    sound_manager = Sound_Manager()
+    sound_manager.title_start()
 
 
 def exit():
@@ -25,7 +29,7 @@ def handle_events():
             if(event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                     game_framework.quit()
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RETURN):
-                game_framework.change_state(airman_stage)
+                game_framework.change_state(stage_state)
 
 
 

@@ -5,6 +5,8 @@ import os
 from pico2d import *
 import game_framework
 import game_world
+import boss_state
+import title_state
 
 from rockman import Rockman
 from airman_background import Airman_stagebackground
@@ -12,6 +14,7 @@ from ariman_enemy import Tikky, Cloud, Fan_fined
 from airman_brick import Brick
 from game_ui import Player_hp
 from sound_manager import *
+
 
 name = "MainState"
 tikkys_position = [(950,300), (1500, 250), (2000, 350), (2450, 330), (2900, 330), (7900, 330), (8270, 360)]
@@ -23,14 +26,14 @@ bricks_position = [(345,325), (1225, 415), (1730,415), (2255,455) ,(2735,415), (
 bricks_size = [(400,20), (46,20), (23,20), (23,20), (23,20), (69,20), (1100, 20), (115,20), (160, 20),(90,20),(90,20), (135, 20),(90,20),(90,20),(23,20),(90,20),(43,20)
                ,(85,10),(160,10),(135,20),(85,10),(85,20),(85,20),(355,20)]
 player = None
-testx = 3200
+testx = 12000
 tikkys = []
 clouds= []
 fan_fineds = []
 bricks= []
 player_hp = None
 sound_manager = None
-
+next_boss_stage = 12200
 
 def collide(a, b):
     # fill here
@@ -56,9 +59,11 @@ def enter():
     background = Airman_stagebackground()
     background.set_center_object(player)
     sound_manager = Sound_Manager()
+
     player.clamp_x = 0
     player.now_state = 'airman_stage'
 
+    sound_manager.stage_start()
     player.set_sound_manager(sound_manager)
 
     for tikky in tikkys:
@@ -89,6 +94,7 @@ def enter():
 
     player.x = testx
 def exit():
+    global sound_manager
     game_world.clear()
     del (sound_manager)
 
@@ -122,10 +128,8 @@ def update():
             if (obj.name == 'Cloud'):
                     player.x = obj.x
                     player.y,player.min_y = obj.y + 50 , obj.collide_y
-            print("왜")
             break
         else:
-            print("헐")
             player.min_y = -200
             player.fall_check = True
             #player.fall()
@@ -149,7 +153,10 @@ def update():
             player.hp -= 1
 
     player_hp.hp = player.hp
-    print(player.now_state)
+
+
+    if (player.x > next_boss_stage):
+        game_framework.change_state(boss_state)
 
 
 

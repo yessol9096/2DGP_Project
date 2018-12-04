@@ -23,7 +23,7 @@ FALL_SPEED_MPM = (FALL_SPEED_KMPH * 1000.0 / 60.0)
 FALL_SPEED_MPS = (FALL_SPEED_MPM / 60.0)
 FALL_SPEED_PPS = (FALL_SPEED_MPS * PIXEL_PER_METER)
 
-ENTER_SPEED_KMPH = 100.0  # Km / Hour
+ENTER_SPEED_KMPH = 70.0  # Km / Hour
 ENTER_SPEED_MPM = (ENTER_SPEED_KMPH * 1000.0 / 60.0)
 ENTER_SPEED_MPS = (ENTER_SPEED_MPM / 60.0)
 ENTER_SPEED_PPS = (ENTER_SPEED_MPS * PIXEL_PER_METER)
@@ -203,7 +203,8 @@ class JumpState:
     @staticmethod
     def enter(rockman, event):
         rockman.now_state = 'JumpState'
-        rockman.sound_manager.jump()
+        if(rockman.jump_time == 0):
+            rockman.sound_manager.jump()
         global frame_y
         frame_y = 0
         if event == RIGHT_DOWN:
@@ -328,7 +329,7 @@ class Rockman:
     start_image = None
     image = None
     def __init__(self):
-        self.x, self.y =800 // 2, 900
+        self.x, self.y =800 // 2, 1500
         # Boy is only once created, so instance image loading is fine
         if(Rockman.image == None):
             self.image = load_image('resource/rockman/rockman240x280.png')
@@ -372,7 +373,7 @@ class Rockman:
     def set_background(self, bg):
         self.bg = bg
         self.x = self.canvas_width / 2
-        self.y = 900
+        self.y = 1500
 
     def collide(self,collide_y):
         self.min_y = collide_y
@@ -405,10 +406,6 @@ class Rockman:
 
         if (self.y > self.min_y and self.fall_check == True and self.cur_state != StartState and self.cur_state != JumpState):
             self.y -= 5
-
-    def fall(self):
-        if (self.min_y == -200 and self.fall_check == True and self.now_state != 'StartState' and self.now_state != 'JumpState'):
-            self.add_event(FALLING)
 
     def draw(self):
         self.fx, self.fy = self.x - self.bg.window_left, self.y - self.bg.window_bottom

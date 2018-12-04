@@ -3,6 +3,8 @@ from pico2d import *
 class Sound_Manager:
 
     battle_bgm = None
+    title_bgm = None
+    stage_bgm = None
     clear_bgm = None
     shot_sound = None
     jump_sound = None
@@ -63,6 +65,18 @@ class Sound_Manager:
             self.battle_bgm = load_music('resource/bgm/BossBattle.ogg')
             self.battle_bgm.set_volume(64)
             self.battle_bgm.repeat_play()
+
+    def stage_start(self):
+        if self.stage_bgm == None:
+            self.stage_bgm = load_music('resource/bgm/airman.mp3')
+            self.stage_bgm.set_volume(64)
+            self.stage_bgm.play()
+
+    def title_start(self):
+        if self.title_bgm == None:
+            self.title_bgm = load_music('resource/bgm/title.wav')
+            self.title_bgm.set_volume(64)
+            self.title_bgm.play()
 
     def battle_end(self):
         self.battle_bgm.stop()

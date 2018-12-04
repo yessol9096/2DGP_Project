@@ -1,18 +1,18 @@
 
 # layer 0: Background Objects
 # layer 1: Foreground Objects
-# layer 2: bullets
-# layer 3: player, ui
-# layer 4: tornado
-objects = [[],[],[],[],[]]
+# layer 2: bullet
+# layer 3: tornado
+objects = [[],[],[],[]]
 
 
 def add_object(o, layer):
     objects[layer].append(o)
 
+
 def add_objects(l, layer):
-    for o in l:
-        add_object(o, layer)
+    objects[layer] += l
+
 
 def remove_object(o):
     for i in range(len(objects)):
@@ -25,7 +25,6 @@ def remove_object(o):
 def clear():
     for l in objects:
         l.clear()
-    objects.clear()
 
 
 def all_objects():
