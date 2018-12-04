@@ -62,7 +62,7 @@ class Airman:
                 self.idle_time = 0
         if (self.hp < 0):
             self.cur_state = 'dead'
-            
+
     def jump(self):
         self.jump_time += game_framework.frame_time
         r = math.pi / 180
@@ -93,7 +93,7 @@ class Airman:
                      (self.x + (math.cos(170 * r) * 450), self.y + (math.sin(170 * r) * 450))
                      ]
         tornado_rightpos = [(self.x + math.cos(50 * r) * 200, self.y + math.sin(50 * r) * 200),
-                           (self.x + math.cos(15 * r) * 200, self.y + math.sin(15 * r) * 200),
+                           (self.x + math.cos(13 * r) * 200, self.y + math.sin(13 * r) * 200),
                            (self.x + math.cos(80 * r) * 200, self.y + math.sin(80 * r) * 200),
                            (self.x + math.cos(20 * r) * 450, self.y + math.sin(20 * r) * 450),
                            (self.x + (math.cos(50 * r) * 450), self.y + (math.sin(50 * r) * 450)),

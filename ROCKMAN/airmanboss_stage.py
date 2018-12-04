@@ -5,6 +5,7 @@ import os
 from pico2d import *
 import game_framework
 import game_world
+import gameover_state
 
 from rockman import Rockman
 from airman_background import Airman_bossbackground
@@ -112,6 +113,9 @@ def update():
 
     player_hp.hp = player.hp
     airman_hp.hp = airman.hp
+
+    if(player.hp < 0):
+        game_framework.change_state(gameover_state)
 
 
 
