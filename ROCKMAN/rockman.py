@@ -374,7 +374,6 @@ class Rockman:
     def draw(self):
         self.fx, self.fy = self.x - self.bg.window_left, self.y - self.bg.window_bottom
         self.cur_state.draw(self)
-        self.font.draw(self.fx - 60, self.fy - 50, '(%5d, %5d)' % (self.x, self.y), (255, 255, 0))
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
