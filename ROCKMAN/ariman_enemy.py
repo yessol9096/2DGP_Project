@@ -44,7 +44,6 @@ class Tikky:
     def draw(self):
         self.sx = self.x - (self.bg.window_left)
         self.image.clip_draw(0, int(self.frame) * 104, 80, 104, self.sx, self.y, 200, 250)
-        draw_rectangle(*self.get_bb())
 
 
 class Cloud:
@@ -96,7 +95,6 @@ class Cloud:
         self.circle()
         self.sx = self.x - (self.bg.window_left)
         self.image.clip_draw( int(self.frame) *40, 0, 40, 32, self.sx, self.y, 100, 100)
-        draw_rectangle(*self.get_bb())
 
 class Fan_fined:
 
@@ -132,7 +130,6 @@ class Fan_fined:
 
     def draw(self):
         self.sx = self.x - (self.bg.window_left)
-        draw_rectangle(*self.get_bb())
         if (self.damage == False):
             self.image.clip_draw(int(self.frame) * 40, 31, 40, 31, self.sx, self.y, 100, 90)
         else:

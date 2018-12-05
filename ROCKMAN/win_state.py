@@ -5,7 +5,7 @@ import title_state
 
 name = "WinState"
 image = None
-logo_time = 0.0
+
 
 
 def enter():

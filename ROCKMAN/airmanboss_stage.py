@@ -81,7 +81,7 @@ def handle_events():
 
 
 def update():
-    global airman_hp, player_hp, airman, player
+    global airman_hp, player_hp, airman, player, sound_managerz
     for game_object in game_world.all_objects():
         game_object.update()
 

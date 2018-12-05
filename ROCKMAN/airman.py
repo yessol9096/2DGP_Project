@@ -59,16 +59,6 @@ class Airman:
 
     def update(self):
         self.frame = (self.frame + 15 * ACTION_PER_TIME * game_framework.frame_time) % 15
-
-        #if(self.cur_state == 'jump'):
-         #   self.jump()
-        #elif (self.cur_state == 'attack'):
-         #   self.attack()
-         #   self.cur_state = 'idle'
-        #elif (self.cur_state == 'idle'):
-         #   self.idle()
-        #if (self.hp < 0):
-         #   self.cur_state = 'dead'
         self.bt.run()
 
 
@@ -105,7 +95,6 @@ class Airman:
             return BehaviorTree.SUCCESS
         else:
             return BehaviorTree.FAIL
-            #self.cur_state = 'attack'
 
     def attack(self):
         self.cur_state = 'attack'
@@ -151,4 +140,3 @@ class Airman:
             if (self.time > 1.0):
                 self.damage = False
                 self.time = 0
-        draw_rectangle(*self.get_bb())

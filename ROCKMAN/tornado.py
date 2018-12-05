@@ -49,4 +49,3 @@ class Tornado:
 
     def draw(self):
         self.tornado_image.clip_draw(int(self.frame) * 20, self.dir * 24, 20, 24, self.x , self.y, 90, 90)
-        draw_rectangle(*self.get_bb())
