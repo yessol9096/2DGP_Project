@@ -20,7 +20,7 @@ def exit():
 
 def update():
     global logo_time
-    if(logo_time > 0.5):
+    if(logo_time > 0.4):
         game_framework.change_state(airmanboss_stage)
         logo_time = 0
     logo_time += 0.01

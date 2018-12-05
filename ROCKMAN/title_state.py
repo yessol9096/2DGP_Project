@@ -16,7 +16,8 @@ def enter():
 
 
 def exit():
-    global image
+    global image, sound_manager
+    del(sound_manager)
     del(image)
 
 

@@ -11,16 +11,9 @@ class Sound_Manager:
     damaged_sound = None
     enter_sound = None
     dead_sound = None
-    out_sound = None
 
-    regen_sound = None
     enem_damaged_sound = None
-    missile_sound = None
-    bomb_sound = None
-    rock_on_sound = None
     landing_sound = None
-    take_off_sound = None
-
     explosion_sound = None
 
     def __init__(self):
@@ -36,26 +29,15 @@ class Sound_Manager:
         if self.enter_sound == None:
             self.enter_sound = load_wav('resource/sound/enter_stage.wav')
             self.enter_sound.set_volume(64)
-        if self.out_sound == None:
-            self.out_sound = load_wav('resource/sound/out_stage.wav')
-            self.out_sound.set_volume(64)
         if self.dead_sound == None:
             self.dead_sound = load_wav('resource/sound/dead.wav')
             self.dead_sound.set_volume(64)
         if self.enem_damaged_sound == None:
             self.enem_damaged_sound = load_wav('resource/sound/enem_damaged.wav')
             self.enem_damaged_sound.set_volume(64)
-        if self.bomb_sound == None:
-            self.bomb_sound = load_wav('resource/sound/Bomb.wav')
-            self.bomb_sound.set_volume(64)
-        if self.rock_on_sound == None:
-            self.rock_on_sound = load_wav('resource/sound/rock_on.wav')
-            self.rock_on_sound.set_volume(64)
         if self.landing_sound == None:
             self.landing_sound = load_wav('resource/sound/landing.wav')
             self.landing_sound.set_volume(64)
-
-
         if self.explosion_sound == None:
             self.explosion_sound = load_wav('resource/sound/explosion.wav')
             self.explosion_sound.set_volume(64)
@@ -78,8 +60,6 @@ class Sound_Manager:
             self.title_bgm.set_volume(64)
             self.title_bgm.play()
 
-    def battle_end(self):
-        self.battle_bgm.stop()
 
     def stage_clear(self):
         if self.clear_bgm == None:

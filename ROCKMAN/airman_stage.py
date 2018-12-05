@@ -115,6 +115,8 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
+                game_framework.change_state(boss_state)
         else:
             player.handle_event(event)
 

@@ -36,7 +36,7 @@ def collide(a, b):
 def enter():
     global player, airman, player_hp, airman_hp, sound_manager
     player = Rockman()
-    airman = Airman(600, 190)
+    airman = Airman(700, 190)
     player.clamp_x = 80
     background = Airman_bossbackground()
     background.set_center_object(player)
@@ -58,8 +58,8 @@ def enter():
 
 def exit():
     global sound_manager
-    game_world.clear()
     del (sound_manager)
+    game_world.clear()
 
 def pause():
     pass
